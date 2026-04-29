@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Riesgo Río Rahue - DATAFLOW IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cian-intenso: #00f2ff;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .logo-ia {
+            color: var(--cian-intenso);
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+        }
+
+        .slide-container {
+            height: 100vh;
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--cian-intenso);
+            color: var(--cian-intenso);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--cian-intenso);
+            color: var(--bg-dark);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--cian-intenso);
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.9);
+            text-align: center;
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 50;
+        }
+
+        .chart-mockup {
+            width: 100%;
+            height: 200px;
+            border-left: 2px solid #64748b;
+            border-bottom: 2px solid #64748b;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .bar-rain {
+            background: rgba(0, 242, 255, 0.3);
+            position: absolute;
+            bottom: 0;
+        }
+
+        .line-river {
+            fill: none;
+            stroke: var(--cian-intenso);
+            stroke-width: 3;
+        }
+
+        /* Estilos móviles */
+        @media (max-width: 640px) {
+            .content-card {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+            .slide {
+                padding: 1rem;
+            }
+            h1 { font-size: 1.5rem !important; }
+            h2 { font-size: 1.25rem !important; }
+            p, li { font-size: 0.9rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progress"></div>
+
+    <!-- Header / Logo -->
+    <header class="fixed top-0 left-0 right-0 p-6 flex justify-between items-center z-50">
+        <div class="text-sm font-semibold opacity-50 uppercase tracking-widest">Análisis de Riesgo 2026</div>
+        <div class="logo-ia text-xl md:text-2xl">DATAFLOW IA</div>
+    </header>
+
+    <!-- Main Presentation Container -->
+    <main class="slide-container" id="slider">
+        
+        <!-- SLIDE 1: Introducción -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">01. INTRODUCCIÓN</span>
+                <h1 class="text-3xl md:text-4xl font-bold mt-2 mb-6">Ubicación y Desafío</h1>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-slate-300 leading-relaxed">El Río Rahue es la columna vertebral hídrica de Osorno, cruzando la ciudad de sur a norte.</p>
+                        <ul class="mt-4 space-y-2 text-slate-400">
+                            <li><i class="fas fa-map-marker-alt text-cyan-500 mr-2"></i> Cruce urbano crítico.</li>
+                            <li><i class="fas fa-city text-cyan-500 mr-2"></i> Eje económico y recreativo.</li>
+                            <li><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i> Problema: Expansión urbana descontrolada en zonas de inundación natural.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 rounded-xl p-4 flex items-center justify-center border border-slate-700">
+                         <div class="text-center">
+                            <i class="fas fa-water text-5xl text-cyan-500 mb-2"></i>
+                            <p class="text-xs uppercase text-slate-500">Río Rahue, Osorno</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Contexto Hidrológico -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">02. CONTEXTO HIDROLÓGICO</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Régimen de Lluvias</h2>
+                <div class="space-y-4">
+                    <p class="text-slate-300">Osorno posee un clima templado lluvioso donde la estacionalidad marca la pauta de riesgo.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-slate-900 p-4 rounded-lg">
+                            <i class="fas fa-cloud-showers-heavy text-cyan-400 text-2xl mb-2"></i>
+                            <h4 class="font-bold">Pluviometría</h4>
+                            <p class="text-sm text-slate-400">Altas concentraciones invernales.</p>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-lg">
+                            <i class="fas fa-chart-line text-cyan-400 text-2xl mb-2"></i>
+                            <h4 class="font-bold">Caudal</h4>
+                            <p class="text-sm text-slate-400">Respuesta rápida a frentes de mal tiempo.</p>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-lg">
+                            <i class="fas fa-snowflake text-cyan-400 text-2xl mb-2"></i>
+                            <h4 class="font-bold">Invierno</h4>
+                            <p class="text-sm text-slate-400">Periodo crítico de saturación hídrica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Historial -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">03. HISTORIAL DE INUNDACIONES</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Zonas de Mayor Impacto</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-cyan-500 pl-4">
+                            <h4 class="font-bold text-xl">Sectores Críticos</h4>
+                            <p class="text-slate-400">Francke y Chaurakawín presentan los mayores índices de vulnerabilidad histórica.</p>
+                        </div>
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-bold text-xl">Evento 2025</h4>
+                            <p class="text-slate-400">Referente reciente de desborde por precipitaciones extremas en corto tiempo.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+                        <h4 class="text-sm font-bold uppercase mb-4 text-slate-500">Frecuencia de Eventos</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1"><span>Menores (~2 años)</span><span>Alta</span></div>
+                                <div class="w-full bg-slate-700 h-2 rounded-full"><div class="bg-cyan-500 h-2 rounded-full" style="width: 85%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1"><span>Extremos (Siglo)</span><span>Baja / Alto Impacto</span></div>
+                                <div class="w-full bg-slate-700 h-2 rounded-full"><div class="bg-red-500 h-2 rounded-full" style="width: 15%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Correlación -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">04. CORRELACIÓN ESTADÍSTICA</span>
+                <h2 class="text-3xl font-bold mt-2 mb-4">Pluviometría vs Nivel del Río</h2>
+                <p class="text-sm text-slate-400 mb-4">Modelación de picos de lluvia correlacionados con el aumento inmediato del caudal.</p>
+                <div class="chart-mockup">
+                    <svg viewBox="0 0 800 200" class="w-full h-full">
+                        <!-- Lluvia (Barras) -->
+                        <rect x="50" y="150" width="20" height="40" fill="rgba(0, 242, 255, 0.2)" />
+                        <rect x="150" y="130" width="20" height="60" fill="rgba(0, 242, 255, 0.2)" />
+                        <rect x="250" y="100" width="20" height="90" fill="rgba(0, 242, 255, 0.2)" />
+                        <rect x="350" y="60" width="20" height="130" fill="rgba(0, 242, 255, 0.4)" />
+                        <rect x="450" y="110" width="20" height="80" fill="rgba(0, 242, 255, 0.2)" />
+                        
+                        <!-- Caudal (Línea) -->
+                        <path d="M 0 180 Q 150 170 350 40 T 800 160" class="line-river" />
+                        
+                        <!-- Puntos de Alerta -->
+                        <circle cx="350" cy="40" r="6" fill="#ff4444">
+                            <animate attributeName="r" values="6;9;6" dur="1s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                    <div class="absolute top-2 right-2 text-[10px] text-cyan-400">Azul: Lluvia (mm) | Línea: Nivel Río</div>
+                </div>
+                <p class="mt-6 text-center text-cyan-300 font-bold italic">"La correlación positiva indica que el tiempo de respuesta del río es inferior a 12 horas ante frentes intensos."</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Mecánica de Suelos -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">05. MECÁNICA DE SUELOS</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Propiedades Geotécnicas</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900 p-4 rounded-xl border-l-4 border-cyan-500">
+                        <h4 class="font-bold mb-2">Composición</h4>
+                        <p class="text-sm text-slate-300">Suelos de origen volcánico (Trumaos) y presencia de arcillas expansivas en terrazas fluviales.</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl border-l-4 border-cyan-500">
+                        <h4 class="font-bold mb-2">Hidrodinámica</h4>
+                        <p class="text-sm text-slate-300">Alta napa freática durante el invierno, reduciendo la capacidad de infiltración del terreno.</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-around text-center">
+                    <div><span class="block text-2xl font-bold text-cyan-400">Baja</span><span class="text-xs uppercase">Permeabilidad</span></div>
+                    <div><span class="block text-2xl font-bold text-cyan-400">Alta</span><span class="text-xs uppercase">Saturación</span></div>
+                    <div><span class="block text-2xl font-bold text-cyan-400">Crítica</span><span class="text-xs uppercase">Napa Freática</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Clasificación -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">06. CLASIFICACIÓN DE SUELOS</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Niveles de Drenaje (C1-C4)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-lg border border-green-500/30 bg-green-500/10 text-center">
+                        <div class="font-bold text-green-400">C1</div>
+                        <div class="text-[10px] uppercase">Drenaje Alto</div>
+                    </div>
+                    <div class="p-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 text-center">
+                        <div class="font-bold text-yellow-400">C2</div>
+                        <div class="text-[10px] uppercase">Moderado</div>
+                    </div>
+                    <div class="p-4 rounded-lg border border-orange-500/30 bg-orange-500/10 text-center">
+                        <div class="font-bold text-orange-400">C3</div>
+                        <div class="text-[10px] uppercase">Deficiente</div>
+                    </div>
+                    <div class="p-4 rounded-lg border border-red-500/30 bg-red-500/20 text-center">
+                        <div class="font-bold text-red-400">C4</div>
+                        <div class="text-[10px] uppercase">Impermeable</div>
+                    </div>
+                </div>
+                <div class="mt-8 p-4 bg-red-900/20 border border-red-500/50 rounded-xl">
+                    <p class="text-sm text-center font-bold">Relación: Suelo C4 + Lluvia Intensa = Acumulación Inmediata y Riesgo Máximo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Factores de Riesgo -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">07. FACTORES DE RIESGO</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Amenazas Identificadas</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-start p-4 bg-slate-900 rounded-lg">
+                        <i class="fas fa-house-damage text-red-400 mr-4 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold">Urbanización Ribereña</h4>
+                            <p class="text-xs text-slate-400">Asentamientos en lecho de inundación.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-900 rounded-lg">
+                        <i class="fas fa-tools text-red-400 mr-4 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold">Drenaje Insuficiente</h4>
+                            <p class="text-xs text-slate-400">Infraestructura urbana obsoleta.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-900 rounded-lg">
+                        <i class="fas fa-tint-slash text-red-400 mr-4 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold">Saturación del Suelo</h4>
+                            <p class="text-xs text-slate-400">Pérdida de capacidad de absorción.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-900 rounded-lg">
+                        <i class="fas fa-thermometer-three-quarters text-red-400 mr-4 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold">Cambio Climático</h4>
+                            <p class="text-xs text-slate-400">Aumento de intensidad de frentes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: Digitalización -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">08. DIGITALIZACIÓN Y PROPUESTA</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Sistemas SIG</h2>
+                <div class="bg-slate-900 p-6 rounded-xl relative overflow-hidden">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-layer-group text-3xl text-cyan-400 mr-4"></i>
+                        <h4 class="text-xl font-bold">Modelación Predictiva</h4>
+                    </div>
+                    <p class="text-slate-300 text-sm mb-4">Implementación de <strong>Sistemas de Información Geográfica (SIG)</strong> para:</p>
+                    <ul class="text-sm space-y-2 text-slate-400 list-disc list-inside">
+                        <li>Mapas de calor de inundación dinámica.</li>
+                        <li>Sensores IoT de nivel de río en tiempo real.</li>
+                        <li>Alertas tempranas mediante notificaciones push móviles.</li>
+                    </ul>
+                    <div class="absolute -right-4 -bottom-4 opacity-10">
+                        <i class="fas fa-microchip text-9xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: Conclusiones -->
+        <section class="slide">
+            <div class="content-card">
+                <span class="text-cyan-400 font-mono">09. CONCLUSIONES</span>
+                <h2 class="text-3xl font-bold mt-2 mb-6">Síntesis del Análisis</h2>
+                <div class="space-y-4">
+                    <div class="bg-cyan-500/10 p-4 rounded-lg border-l-4 border-cyan-500 flex items-center">
+                        <i class="fas fa-check-circle text-cyan-500 mr-4"></i>
+                        <p class="text-sm">La correlación entre lluvia y caudal es directa y crítica.</p>
+                    </div>
+                    <div class="bg-cyan-500/10 p-4 rounded-lg border-l-4 border-cyan-500 flex items-center">
+                        <i class="fas fa-check-circle text-cyan-500 mr-4"></i>
+                        <p class="text-sm">Las propiedades del suelo (C4) son el mayor multiplicador del riesgo.</p>
+                    </div>
+                    <div class="bg-cyan-500/10 p-4 rounded-lg border-l-4 border-cyan-500 flex items-center">
+                        <i class="fas fa-check-circle text-cyan-500 mr-4"></i>
+                        <p class="text-sm">Es imperativo actualizar el Plan Regulador Comunal con base técnica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: Propuesta Final -->
+        <section class="slide">
+            <div class="content-card text-center">
+                <span class="text-cyan-400 font-mono">10. PROPUESTA FINAL</span>
+                <h2 class="text-4xl font-bold mt-2 mb-8">Hoja de Ruta 2026</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-cyan-500">1</div>
+                        <p class="text-[10px] uppercase font-bold">Mapas de Riesgo</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-cyan-500">2</div>
+                        <p class="text-[10px] uppercase font-bold">Zonificación</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-cyan-500">3</div>
+                        <p class="text-[10px] uppercase font-bold">Monitoreo IoT</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-cyan-500">4</div>
+                        <p class="text-[10px] uppercase font-bold">Educación</p>
+                    </div>
+                </div>
+                <button class="mt-12 px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-full transition-all font-bold shadow-lg shadow-cyan-900/20" onclick="resetPresentation()">
+                    REINICIAR ANÁLISIS
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Controls -->
+    <div class="fixed bottom-16 right-6 flex space-x-4 z-50">
+        <button class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-1 md:space-y-0 md:space-x-4">
+            <span class="text-cyan-400 font-semibold">www.dataflowia.com</span>
+            <span class="hidden md:inline">|</span>
+            <span>contacto@dataflowia.com</span>
+            <span class="hidden md:inline">|</span>
+            <span class="opacity-50">&copy; 2026 Todos los derechos reservados</span>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slider = document.getElementById('slider');
+        const progress = document.getElementById('progress');
+        const totalSlides = slides.length;
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
+            progress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
+        }
+
+        function resetPresentation() {
+            currentSlide = 0;
+            updateSlider();
+        }
+
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Soporte Touch (Swipes)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+
+        // Inicializar barra
+        updateSlider();
+
+        // Responsive resize
+        window.addEventListener('resize', updateSlider);
+    </script>
+</body>
+</html>
